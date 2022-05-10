@@ -18,7 +18,7 @@ load_dotenv()
 
 URL_TO_MONITOR = 'https://www.canyon.com/en-us/road-bikes/race-bikes/ultimate/cf-sl/ultimate-cf-sl-8/2861.html?dwvar_2861_pv_rahmenfarbe=BU%2FBK'
 headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36', 'Pragma': 'no-cache', 'Cache-Control': 'no-cache'}
-delay = 15 # seconds
+delay = 600 # seconds
 
 log = logging.getLogger(__name__)
 logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"), format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
