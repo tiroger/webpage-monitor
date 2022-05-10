@@ -18,7 +18,7 @@ load_dotenv()
 
 URL_TO_MONITOR = 'https://www.canyon.com/en-us/road-bikes/race-bikes/ultimate/cf-sl/ultimate-cf-sl-8/2861.html?dwvar_2861_pv_rahmenfarbe=BU%2FBK'
 headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36', 'Pragma': 'no-cache', 'Cache-Control': 'no-cache'}
-delay = 900 # seconds
+delay = 600 # seconds
 
 log = logging.getLogger(__name__)
 logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"), format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
@@ -29,7 +29,7 @@ logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"), format='%(asctime)
 #############
 
 def check_availability(URL_TO_MONITOR):
-    previous_availability = ['July 2022']
+    previous_availability = 'July 2022'
 
     response = requests.get(URL_TO_MONITOR, headers=headers) # Requesting the webpage
     soup = BeautifulSoup(response.text, 'html.parser') # Parsing the webpage
@@ -38,10 +38,9 @@ def check_availability(URL_TO_MONITOR):
     availability_message = size_small.find('div', {'class': 'productConfiguration__availabilitySubMessage'}).text # Availability message
     availability_message = availability_message.replace('\n', '').strip() # Removing line breaks and leading and trailing spaces
 
-    if previous_availability[0] != availability_message: # Comparing the previous availability with the current one
+    if previous_availability != availability_message: # Comparing the previous availability with the current one
         message = f'Canyon website has been updated --Availability changed to {availability_message}!'
         send_message(message, os.getenv('MY_NUMBER')) # Sending an SMS only if the availability changes
-        previous_availability = availability_message # Updating previous availability with the current one
     else:
         log.info('No changes...')
 
